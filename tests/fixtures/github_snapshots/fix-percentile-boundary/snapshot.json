@@ -1,0 +1,6 @@
+﻿{
+  "issue": "percentile() returns wrong values at the upper boundary: percentile([1,2,3,4], 50) gives 3 instead of 2.5 and percentile([5,7], 100) interpolates out of range. The interpolation index must be scaled over (len-1), not len.",
+  "f2p_tests": ["tests/test_core.py::test_median", "tests/test_core.py::test_max_is_hundred_percentile"],
+  "p2p_tests": ["tests/test_core.py::test_min_is_zero_percentile"],
+  "origin": "recorded fixture modeled on a real percentile off-by-one PR"
+}

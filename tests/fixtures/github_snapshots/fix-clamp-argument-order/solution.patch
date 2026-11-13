@@ -1,0 +1,5 @@
+﻿--- a/numtools/clamp.py
++++ b/numtools/clamp.py
+@@ -3 +3 @@
+-    return max(min(value, low), high)
++    return min(max(value, low), high)

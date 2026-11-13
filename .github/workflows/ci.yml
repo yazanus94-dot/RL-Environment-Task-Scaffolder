@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  quality:
+    strategy:
+      # Cross-OS proof: the scaffolder must produce identical bundles
+      # (manifests, byte-identical states) on every supported platform.
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.11", "3.12"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -e .
+
+      - name: Lint (ruff)
+        run: ruff check .
+
+      - name: Static typing (mypy strict)
+        run: mypy src
+
+      - name: Tests with coverage
+        run: pytest -v --cov=task_scaffolder --cov-report=term-missing
+
+  reproducibility:
+    runs-on: ubuntu-latest
+    needs: quality
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Scaffold bundles twice and diff manifests
+        run: |
+          python -m task_scaffolder.cli scaffold --snapshot-dir tests/fixtures/github_snapshots --out /tmp/bundle_a
+          python -m task_scaffolder.cli scaffold --snapshot-dir tests/fixtures/github_snapshots --out /tmp/bundle_b
+          diff /tmp/bundle_a/fix-percentile-boundary/manifest.json /tmp/bundle_b/fix-percentile-boundary/manifest.json
+          diff -r /tmp/bundle_a/fix-percentile-boundary/broken /tmp/bundle_b/fix-percentile-boundary/broken
+          diff -r /tmp/bundle_a/fix-percentile-boundary/solution /tmp/bundle_b/fix-percentile-boundary/solution
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: quality
+    steps:
+      - uses: actions/checkout@v4
+      - name: Docker Compose end-to-end (scaffold + verify both states)
+        run: |
+          docker compose build scaffold
+          docker compose up verify

@@ -1,0 +1,5 @@
+﻿--- a/shape_stats/core.py
++++ b/shape_stats/core.py
+@@ -7 +7 @@
+-    k = len(sorted_values) * p / 100.0
++    k = (len(sorted_values) - 1) * p / 100.0

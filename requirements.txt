@@ -1,0 +1,9 @@
+# Runtime: stdlib-only core; requests needed only for the optional live GitHub adapter
+requests==2.32.3
+
+# Test / quality toolchain
+pytest==8.3.4
+pytest-cov==6.0.0
+hypothesis==6.122.3
+ruff==0.8.2
+mypy==1.13.0

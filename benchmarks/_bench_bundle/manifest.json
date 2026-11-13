@@ -1,0 +1,43 @@
+{
+  "broken": {
+    "algorithm": "sha256",
+    "files": {
+      "conftest.py": "5ef4cee3c7e09240325bbe1fc0ec4308a8c72f7e62d534dc9571c0dae0392d63",
+      "shape_stats/__init__.py": "b4a1a9c3275f22fe4f8f05b9d702cc6ddfb58e68f0475c7938fe40e739f666d6",
+      "shape_stats/core.py": "3f83d13dc4be486b69ae28eaddc2dc065fea8787a15022f43ac86045696dad6b",
+      "tests/test_core.py": "0007d8dbde4be5ff3835d669095304bf0ca75d3b532f7b0dc432d09bd6e51c1a"
+    },
+    "total_files": 4
+  },
+  "diff_stats": {
+    "additions": 1,
+    "deletions": 1,
+    "files": [
+      "shape_stats/core.py"
+    ],
+    "hunks": 1
+  },
+  "f2p_tests": [
+    "tests/test_core.py::test_median",
+    "tests/test_core.py::test_max_is_hundred_percentile"
+  ],
+  "fixed": {
+    "algorithm": "sha256",
+    "files": {
+      "conftest.py": "5ef4cee3c7e09240325bbe1fc0ec4308a8c72f7e62d534dc9571c0dae0392d63",
+      "shape_stats/__init__.py": "b4a1a9c3275f22fe4f8f05b9d702cc6ddfb58e68f0475c7938fe40e739f666d6",
+      "shape_stats/core.py": "73baa912e6cde4d69fa8eab8eeec762bb14a010c3af5fede7b48a01d038740e0",
+      "tests/test_core.py": "0007d8dbde4be5ff3835d669095304bf0ca75d3b532f7b0dc432d09bd6e51c1a"
+    },
+    "total_files": 4
+  },
+  "p2p_tests": [
+    "tests/test_core.py::test_min_is_zero_percentile"
+  ],
+  "scaffolder_env": {
+    "implementation": "CPython",
+    "platform": "Windows-11",
+    "python": "3.14.7"
+  },
+  "task_id": "fix-percentile-boundary"
+}

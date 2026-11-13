@@ -1,0 +1,8 @@
+{
+  "task_id": "fix-percentile-boundary",
+  "expect_f2p_fail": false,
+  "tests/test_core.py::test_median": "pass",
+  "tests/test_core.py::test_max_is_hundred_percentile": "pass",
+  "tests/test_core.py::test_min_is_zero_percentile": "pass",
+  "ok": true
+}

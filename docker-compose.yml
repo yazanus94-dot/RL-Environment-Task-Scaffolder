@@ -1,0 +1,26 @@
+services:
+  scaffold:
+    build: .
+    image: task-scaffolder:1.0.0
+    container_name: task-scaffolder-build
+    command: >
+      python -m task_scaffolder.cli scaffold
+      --snapshot-dir tests/fixtures/github_snapshots
+      --out /app/bundles
+
+  verify:
+    build: .
+    image: task-scaffolder:1.0.0
+    container_name: task-scaffolder-verify
+    command: >
+      sh -c "python -m task_scaffolder.cli scaffold --snapshot-dir tests/fixtures/github_snapshots --out /tmp/b &&
+             python -m task_scaffolder.cli verify --bundle /tmp/b/fix-percentile-boundary --state broken &&
+             python -m task_scaffolder.cli verify --bundle /tmp/b/fix-percentile-boundary --state solution"
+
+  tests:
+    build: .
+    image: task-scaffolder:1.0.0
+    container_name: task-scaffolder-tests
+    command: >
+      python -m pytest -v
+    profiles: ["tests"]

@@ -1,0 +1,6 @@
+﻿{
+  "issue": "clamp(5, 0, 10) returns 10: min/max are nested in the wrong order. The bounds application order was inverted during a refactor.",
+  "f2p_tests": ["tests/test_clamp.py::test_clamps_inside"],
+  "p2p_tests": ["tests/test_clamp.py::test_clamp_at_high"],
+  "origin": "recorded fixture modeled on a real argument-order regression PR"
+}
